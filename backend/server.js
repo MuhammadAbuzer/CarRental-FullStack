@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.get("/", (req, res) => res.send("Car Rental Backend is running!"));
 app.use("/api/user", userrouter);
 app.use("/api/owner", ownerRouter);
 
@@ -21,3 +22,5 @@ connectingDb();
 app.listen(process.env.PORT, () => {
   console.log(`Server running at http://localhost:${process.env.PORT}`);
 });
+
+export default app;
