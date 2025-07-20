@@ -11,8 +11,8 @@ const createTokenAndSetCookie = (res, user) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: true, //
-    sameSite: "none",
+    secure: process.env.NODE_ENV === "production", // ✅ Dynamic
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ✅ Lax for dev
     maxAge: 24 * 60 * 60 * 1000,
   });
 
