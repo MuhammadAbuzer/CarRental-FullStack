@@ -2,22 +2,6 @@ import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Car from "../models/Cars.js";
-const createTokenAndSetCookie = (res, user) => {
-  const token = jwt.sign(
-    { _id: user._id, email: user.email, role: user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
-  );
-
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // ✅ Dynamic
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ✅ Lax for dev
-    maxAge: 24 * 60 * 60 * 1000,
-  });
-
-  return token;
-};
 
 export const SigningUp = async (req, res) => {
   try {
@@ -38,7 +22,12 @@ export const SigningUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashedPassword });
 
-    const token = createTokenAndSetCookie(res, user);
+    const token = jwt.sign(
+      { _id: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
     res.status(201).json({
       success: true,
       message: "User registerd successfully",
@@ -75,7 +64,12 @@ export const LogIn = async (req, res) => {
         .json({ success: false, message: "Invalid credentials" });
     }
 
-    const token = createTokenAndSetCookie(res, user);
+    const token = jwt.sign(
+      { _id: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
     res
       .status(200)
       .json({ success: true, message: "Login successful", token, user });

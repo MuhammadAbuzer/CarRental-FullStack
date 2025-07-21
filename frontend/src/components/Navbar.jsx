@@ -7,8 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { LogOut } from "../Redux/Features/LogInSlice";
 import { ThemeContext } from "../context/ToggleThemeContext";
 import { AnimatePresence, motion } from "motion/react";
+import { TokenContext } from "../context/Token";
+import toast from "react-hot-toast";
+import { setUser } from "../Redux/Features/UserInfoSlice";
 
 const Navbar = ({ setShowLogin }) => {
+  const { clearToken } = useContext(TokenContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,7 +25,12 @@ const Navbar = ({ setShowLogin }) => {
   const isDark = theme === "dark";
 
   const handleLogIn = () => setShowLogin(true);
-  const handleLogOut = () => dispatch(LogOut());
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    dispatch(setUser(null));
+    toast.success("Loggedout successfully");
+    navigate("/");
+  };
 
   useEffect(() => {
     const handleScroll = () => {

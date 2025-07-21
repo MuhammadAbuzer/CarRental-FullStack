@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { TokenContext } from "../../context/Token";
+import { useContext } from "react";
 
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URI;
 
@@ -13,13 +15,14 @@ const initialState = {
   togglingStatusLoading: false,
   singleBooking: [],
 };
-
 export const SubmittingBookingForm = createAsyncThunk(
   "SubmittingBookingForm",
   async (
     { car, pickupDate, returnDate, availableDays },
     { rejectWithValue }
   ) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+
     try {
       const res = await axios.post(
         "/api/owner/create-booking",
@@ -29,7 +32,11 @@ export const SubmittingBookingForm = createAsyncThunk(
           returnDate: new Date(returnDate).toISOString(),
           availableDays,
         },
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (res.data.success) {
@@ -49,9 +56,12 @@ export const SubmittingBookingForm = createAsyncThunk(
 export const fetchingMyBookings = createAsyncThunk(
   "fetchingMyBookings",
   async (_, { rejectWithValue }) => {
+    const token = JSON.parse(localStorage.getItem("token"));
     try {
       const res = await axios.get("/api/owner/my-bookings", {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (res.data.success) {
@@ -65,6 +75,7 @@ export const fetchingMyBookings = createAsyncThunk(
     }
   }
 );
+
 export const fetchingAvailableCars = createAsyncThunk(
   "fetchingAvailableCars",
   async ({ location, pickupDate, returnDate }, { rejectWithValue }) => {

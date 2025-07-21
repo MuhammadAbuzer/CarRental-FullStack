@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchingUserInfo } from "../../Redux/Features/UserInfoSlice";
+import { TokenContext } from "../../context/Token";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -23,13 +24,15 @@ const SideBar = () => {
 
     try {
       setUploading(true);
+      const token = JSON.parse(localStorage.getItem("token"));
+
       const res = await axios.post(
         "http://localhost:3000/api/owner/updating-image",
         formData,
         {
-          withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -50,7 +53,7 @@ const SideBar = () => {
 
   return (
     <div
-      className={`relative min-h-screen flex flex-col items-center pt-8 w-full md:w-60 border-r text-sm transition-colors duration-300 ${
+      className={`relative md:min-h-screen h-full flex flex-col items-center pt-8 w-full md:w-60 border-r text-sm transition-colors duration-300 ${
         isDark
           ? "bg-black text-white border-gray-700"
           : "bg-white text-gray-800 border-borderColor"

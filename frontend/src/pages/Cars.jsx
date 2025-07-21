@@ -121,10 +121,10 @@ const Cars = () => {
           </div>
         ) : visibleCars.length > 0 ? (
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
+            // variants={containerVariants}
+            // initial="hidden"
+            // whileInView="show"
+            // viewport={{ once: true, amount: 0.2 }}
             className="grid grid-cols-1 sm:grid-cols-2 mb-7 lg:grid-cols-3 gap-8 mt-4 xl:px-20 max-w-7xl mx-auto"
           >
             {visibleCars.map((car) => (
