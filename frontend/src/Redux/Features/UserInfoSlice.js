@@ -77,12 +77,11 @@ export const fetchingUserInfo = createAsyncThunk(
       if (res.data.success) {
         return res.data.user;
       } else {
-        // toast.error(res.data.message);
         return rejectWithValue(res.data.message);
       }
     } catch (error) {
       const message = error.response?.data?.message || "Something went wrong";
-      toast.error(message);
+
       return rejectWithValue(message);
     }
   }
