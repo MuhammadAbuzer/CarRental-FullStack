@@ -77,6 +77,18 @@ This project was built to practice and strengthen my full-stack development skil
 
    ```
 
+
+## 👤 Admin Credentials  
+
+Use the following demo account to log in as an **Admin**:
+
+- **Email:** `owner@gmail.com`  
+- **Password:** `123456789`  
+
+> ⚠️ These credentials are for **demo purposes only**.  
+> Do not use them in a production environment.
+
+
 ## ⚙️ Run the project
 
 1. **Backend (from root)**
