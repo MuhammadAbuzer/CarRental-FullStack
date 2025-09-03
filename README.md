@@ -95,6 +95,14 @@ This project was built to practice and strengthen my full-stack development skil
 
    ```
 
-📌 About
-This project is created by Abuzer while learning and practicing the MERN stack.
-It demonstrates how to build a full-stack application with authentication, admin dashboards, and real-world features.
+## 📌 About  
+
+This project was developed by **Abuzer** as part of learning and practicing the **MERN (MongoDB, Express.js, React, Node.js) stack**.  
+It showcases the implementation of a **full-stack web application** with features such as:  
+
+- User authentication and authorization  
+- Role-based access (including an admin dashboard)  
+- Real-world application workflows and best practices  
+
+The goal of this project is to gain hands-on experience in designing and developing scalable, maintainable, and production-ready web applications using the MERN stack.  
+
